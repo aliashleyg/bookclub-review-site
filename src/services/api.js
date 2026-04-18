@@ -4,3 +4,14 @@ export async function getBooks() {
     const res = await fetch(`${API_URL}/books`)
     return res.json()
 }
+
+export async function createBook(bookData) {
+    const res = await fetch(`${API_URL}/books`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(bookData),
+    })
+    return res.json()
+}

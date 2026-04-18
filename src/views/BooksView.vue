@@ -2,11 +2,24 @@
 import { ref, onMounted } from 'vue'
 import { getBooks } from '@/services/api'
 import BookCard from "@/components/BookCard.vue";
+import { createBook } from '@/services/api'
 
 const books = ref([])
 const loading = ref(true)
 const error = ref(null)
+const newBook = ref({
+  title: '',
+  author: '',
+  genre: '',
+  description: '',
+  coverImage: ''
+})
 
+async function handleCreateBook() {
+  const createdBook = await createBook(newBook.value)
+  books.value.push(createdBook)
+
+}
 onMounted(async () => {
   try {
     books.value = await getBooks()
@@ -15,6 +28,7 @@ onMounted(async () => {
   } finally {
     loading.value = false
   }
+
 })
 </script>
 
@@ -22,8 +36,19 @@ onMounted(async () => {
   <p v-if="loading">Loading...</p>
   <p v-else-if="error">{{ error }}</p>
 
+  <div style="margin-bottom: 2rem;">
+    <h2>Add a Book</h2>
+
+    <input v-model="newBook.title" placeholder="Title" /><br />
+    <input v-model="newBook.author" placeholder="Author" /><br />
+    <input v-model="newBook.genre" placeholder="Genre" /><br />
+    <input v-model="newBook.coverImage" placeholder="Cover Image URL" /><br />
+    <textarea v-model="newBook.description" placeholder="Description"></textarea><br />
+
+    <button @click="handleCreateBook()">Submit</button>
+  </div>
+
   <BookCard
-      v-else
       v-for="book in books"
       :key="book.id"
       :book="book"
@@ -31,30 +56,3 @@ onMounted(async () => {
 </template>
 
 <style scoped></style>
-
-<!--<script setup>-->
-<!--import { ref, onMounted } from 'vue'-->
-<!--import Button from 'primevue/button'-->
-<!--import BookCard from '../components/BookCard.vue'-->
-<!--import { getBooks } from '../services/api'-->
-
-<!--const books = ref([])-->
-
-<!--onMounted(async () => {-->
-<!--  books.value = await getBooks()-->
-<!--})-->
-<!--</script>-->
-
-<!--<template>-->
-<!--  <div style="max-width: 800px; margin: 2rem auto; padding: 1rem;">-->
-<!--    <h1>Book Club Books</h1>-->
-
-<!--    <Button label="PrimeVue is working 😄" style="margin-bottom: 1rem;" />-->
-
-<!--    <BookCard-->
-<!--        v-for="book in books"-->
-<!--        :key="book.id"-->
-<!--        :book="book"-->
-<!--    />-->
-<!--  </div>-->
-<!--</template>-->

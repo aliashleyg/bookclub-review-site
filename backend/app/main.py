@@ -22,7 +22,7 @@ def get_books():
             "author": "Backend Test",
             "genre": "Test Genre",
             "description": "If you see this, the frontend is loading data from the API.",
-            "coverImage": "https://via.placeholder.com/200x300"
+            "coverImage": "https://upload.wikimedia.org/wikipedia/commons/c/c8/HMCoFirstEdSecondPrintTitle.jpg"
         },
         {
             "id": 2,

@@ -13,7 +13,7 @@ defineProps({
     <template #title>{{ book.title }}</template>
     <template #subtitle>{{ book.author }}</template>
     <template #content>
-      <p><strong>Genre:</strong>{{ book.genre }}</p>
+      <p><strong>Genre: </strong>{{ book.genre }}</p>
       <p class="m-0">{{ book.description }}</p>
     </template>
 
