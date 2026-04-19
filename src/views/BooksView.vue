@@ -1,25 +1,19 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { getBooks } from '@/services/api'
+import { getBooks, createBook } from '@/services/api'
 import BookCard from "@/components/BookCard.vue";
-import { createBook } from '@/services/api'
+import AddBookForm from "@/components/AddBookForm.vue";
 
 const books = ref([])
 const loading = ref(true)
 const error = ref(null)
-const newBook = ref({
-  title: '',
-  author: '',
-  genre: '',
-  description: '',
-  coverImage: ''
-})
 
-async function handleCreateBook() {
-  const createdBook = await createBook(newBook.value)
+async function handleCreateBook(newBook) {
+  const createdBook = await createBook(newBook)
   books.value.push(createdBook)
-
 }
+
+
 onMounted(async () => {
   try {
     books.value = await getBooks()
@@ -35,19 +29,7 @@ onMounted(async () => {
 <template>
   <p v-if="loading">Loading...</p>
   <p v-else-if="error">{{ error }}</p>
-
-  <div style="margin-bottom: 2rem;">
-    <h2>Add a Book</h2>
-
-    <input v-model="newBook.title" placeholder="Title" /><br />
-    <input v-model="newBook.author" placeholder="Author" /><br />
-    <input v-model="newBook.genre" placeholder="Genre" /><br />
-    <input v-model="newBook.coverImage" placeholder="Cover Image URL" /><br />
-    <textarea v-model="newBook.description" placeholder="Description"></textarea><br />
-
-    <button @click="handleCreateBook()">Submit</button>
-  </div>
-
+  <AddBookForm @add-new-book-click="handleCreateBook" />
   <BookCard
       v-for="book in books"
       :key="book.id"
