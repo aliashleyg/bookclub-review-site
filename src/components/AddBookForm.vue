@@ -28,15 +28,17 @@ function resetForm() {
 </script>
 
 <template>
-  <h2>Add a Book From Book Form Component!</h2>
+  <form @submit.prevent="handleSubmit">
+    <h2>Add a Book From Book Form Component!</h2>
 
-  <input v-model="newBook.title" placeholder="Title" /><br />
-  <input v-model="newBook.author" placeholder="Author" /><br />
-  <input v-model="newBook.genre" placeholder="Genre" /><br />
-  <input v-model="newBook.coverImage" placeholder="Cover Image URL" /><br />
-  <textarea v-model="newBook.description" placeholder="Description"></textarea><br />
+    <input v-model="newBook.title" placeholder="Title" required/><br />
+    <input v-model="newBook.author" placeholder="Author" /><br />
+    <input v-model="newBook.genre" placeholder="Genre" /><br />
+    <input v-model="newBook.coverImage" placeholder="Cover Image URL" /><br />
+    <textarea v-model="newBook.description" placeholder="Description"></textarea><br />
 
-  <button @click="handleSubmit">Submit</button>
+    <button type="submit">Submit</button>
+  </form>
 </template>
 
 <style scoped>
