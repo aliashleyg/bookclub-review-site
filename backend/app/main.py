@@ -55,5 +55,11 @@ def create_book(book: BookCreate):
     books.append(new_book)
     return new_book
 
-# @app.delete("/books/{id}")
-# def delete_book():
+@app.delete("/books/{id}")
+def delete_book(id: int):
+    for book in books:
+        if book["id"] == id:
+            books.remove(book)
+            return {"message": f"Book deleted successfully"}
+    return {"message": f"Book with id {id} not found"}
+
