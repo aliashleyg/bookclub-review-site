@@ -1,5 +1,7 @@
 <script setup>
 import {ref} from "vue";
+import { watch } from 'vue'
+
 const emit = defineEmits(['addNewBookClick'])
 
 const newBook = ref({
@@ -8,6 +10,17 @@ const newBook = ref({
   genre: '',
   description: '',
   coverImage: ''
+})
+
+const props = defineProps({
+  editingBook: Object
+})
+
+watch(() => props.editingBook, (newVal) => {
+  if (newVal) {
+    newBook.value = { ...newVal }
+    console.log("new book: ", newVal)
+  }
 })
 
 function handleSubmit() {
@@ -25,6 +38,7 @@ function resetForm() {
   }
 
 }
+
 </script>
 
 <template>

@@ -15,11 +15,13 @@ async function handleCreateBook(newBook) {
   console.log("created book: ", createdBook)
 }
 
-async function handleDeletedBook(id) {
+async function handleDeletingBook(id) {
   const deletedBook = await deleteBook(id)
   books.value = books.value.filter(book => book.id !== id)
-  console.log("deleted book: ", id)
-  console.log("books: ", books)
+}
+
+async function submitBook(book) {
+  bookToEdit.value = book
 }
 
 onMounted(async () => {
@@ -37,9 +39,11 @@ onMounted(async () => {
 <template>
   <p v-if="loading">Loading...</p>
   <p v-else-if="error">{{ error }}</p>
-  <AddBookForm @add-new-book-click="handleCreateBook" />
+  <AddBookForm @add-new-book-click="handleCreateBook"
+    :editing-book="bookToEdit"/>
   <BookCard
-      @delete-book-click="handleDeletedBook"
+      @edit-book-click="handleEditingBook"
+      @delete-book-click="handleDeletingBook"
       v-for="book in books"
       :key="book.id"
       :book="book"
