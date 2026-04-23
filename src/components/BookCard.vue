@@ -1,9 +1,15 @@
 <script setup>
 import Card from 'primevue/card'
+const emit = defineEmits(['deleteBookClick'])
 
 defineProps({
   book: Object
 })
+
+function deleteBook(book) {
+  emit('deleteBookClick', book.id)
+}
+
 
 </script>
 
@@ -14,8 +20,8 @@ defineProps({
     <template #subtitle>{{ book.author }}</template>
     <template #content><p>{{ book.genre }}</p>
       <p class="m-0">{{ book.description }}</p>
+      <button @click="deleteBook(book)">Delete</button>
     </template>
-
   </Card>
 
 

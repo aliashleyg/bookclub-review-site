@@ -29,7 +29,7 @@ function resetForm() {
 
 <template>
   <form @submit.prevent="handleSubmit">
-    <h2>Add a Book From Book Form Component!</h2>
+    <h2>Add a Book</h2>
 
     <input v-model="newBook.title" placeholder="Title" required/><br />
     <input v-model="newBook.author" placeholder="Author" /><br />

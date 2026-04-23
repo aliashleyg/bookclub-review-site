@@ -15,3 +15,10 @@ export async function createBook(bookData) {
     })
     return res.json()
 }
+
+export async function deleteBook(id) {
+    const res = await fetch(`${API_URL}/books/${id}`, {
+        method: 'DELETE'
+    })
+    return res.json()
+}
