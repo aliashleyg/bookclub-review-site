@@ -7,6 +7,7 @@ import AddBookForm from "@/components/AddBookForm.vue";
 const books = ref([])
 const loading = ref(true)
 const error = ref(null)
+const bookToEdit = ref(null)
 
 async function handleCreateBook(newBook) {
   const createdBook = await createBook(newBook)

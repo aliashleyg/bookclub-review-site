@@ -19,3 +19,7 @@
 6. Backend updates book
 7. UI updates
 8. Form resets
+
+## State to track
+- bookToEdit: The book currently being edited
+- this value lives in the parent component
