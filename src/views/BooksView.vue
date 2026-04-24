@@ -20,7 +20,7 @@ async function handleDeletingBook(id) {
   books.value = books.value.filter(book => book.id !== id)
 }
 
-async function submitBook(book) {
+async function handleEditingBook(book) {
   bookToEdit.value = book
 }
 
