@@ -2,7 +2,7 @@
 import {ref} from "vue";
 import { watch } from 'vue'
 
-const emit = defineEmits(['addNewBookClick'])
+const emit = defineEmits(['submitBook'])
 
 const newBook = ref({
   title: '',
@@ -24,7 +24,7 @@ watch(() => props.editingBook, (newVal) => {
 })
 
 function handleSubmit() {
-  emit('addNewBookClick', newBook.value)
+  emit('submitBook', newBook.value)
   resetForm()
 }
 
