@@ -33,3 +33,8 @@ export async function updateBook(id, bookData) {
     })
     return res.json()
 }
+
+export async function searchGoogleBooks(searchInputTitle) {
+    const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(searchInputTitle)}`)
+    return res.json()
+}

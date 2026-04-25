@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue'
 import { getBooks, createBook, deleteBook, updateBook } from '@/services/api'
 import BookCard from "@/components/BookCard.vue";
 import AddBookForm from "@/components/AddBookForm.vue";
+import BookSearch from "@/components/BookSearch.vue";
 
 const books = ref([])
 const loading = ref(true)
@@ -36,6 +37,9 @@ async function handleEditingBook(book) {
   bookToEdit.value = book
 }
 
+function handleSearch(searchInputTitle) {
+  console.log("greetings from BooksView - searchInputTitle: ", searchInputTitle)
+}
 onMounted(async () => {
   try {
     books.value = await getBooks()
@@ -51,6 +55,7 @@ onMounted(async () => {
 <template>
   <p v-if="loading">Loading...</p>
   <p v-else-if="error">{{ error }}</p>
+  <BookSearch @search-input-title="handleSearch"/>
   <AddBookForm @submit-book="handleSaveBook"
     :editing-book="bookToEdit"/>
   <BookCard
