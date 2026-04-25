@@ -19,7 +19,7 @@ const props = defineProps({
 watch(() => props.editingBook, (newVal) => {
   if (newVal) {
     newBook.value = { ...newVal }
-    console.log("new book: ", newVal)
+    console.log("submitted book: ", newVal)
   }
 })
 

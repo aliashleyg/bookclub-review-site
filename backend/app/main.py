@@ -63,3 +63,14 @@ def delete_book(id: int):
             return {"message": f"Book deleted successfully"}
     return {"message": f"Book with id {id} not found"}
 
+@app.put("/books/{id}")
+def update_book(id: int, updated_book: BookCreate):
+    for current_book in books:
+        if current_book["id"] == id:
+            current_book["title"] = updated_book.title
+            current_book["author"] = updated_book.author
+            current_book["coverImage"] = updated_book.coverImage
+            current_book["genre"] = updated_book.genre
+            current_book["description"] = updated_book.description
+            return current_book
+    return {"message": f"Book with id {id} not found"}

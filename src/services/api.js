@@ -22,3 +22,14 @@ export async function deleteBook(id) {
     })
     return res.json()
 }
+
+export async function updateBook(id, bookData) {
+    const res = await fetch(`${API_URL}/books/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(bookData),
+    })
+    return res.json()
+}
