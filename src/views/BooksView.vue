@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { getBooks, createBook, deleteBook, updateBook } from '@/services/api'
+import { getBooks, createBook, deleteBook, updateBook, searchGoogleBooks } from '@/services/api'
 import BookCard from "@/components/BookCard.vue";
 import AddBookForm from "@/components/AddBookForm.vue";
 import BookSearch from "@/components/BookSearch.vue";
@@ -37,8 +37,9 @@ async function handleEditingBook(book) {
   bookToEdit.value = book
 }
 
-function handleSearch(searchInputTitle) {
-  console.log("greetings from BooksView - searchInputTitle: ", searchInputTitle)
+async function handleSearch(searchInputTitle) {
+  const searchedBook = await searchGoogleBooks(searchInputTitle)
+  console.log(searchedBook)
 }
 onMounted(async () => {
   try {
