@@ -10,9 +10,8 @@ const loading = ref(true)
 const error = ref(null)
 const bookToEdit = ref(null)
 const searchResults = ref([])
-const title = ref('')
-const author = ref('')
-const thumbnail = ref('')
+const bookResultAttributes = ref([])
+
 async function handleSaveBook(newBook) {
   if (bookToEdit.value) {
     const updatedBook = await updateBook(bookToEdit.value.id, newBook)
@@ -42,24 +41,8 @@ async function handleEditingBook(book) {
 
 async function handleSearch(searchInputTitle) {
   const searchedBook = await searchGoogleBooks(searchInputTitle)
-  searchResults.value = searchedBook.items.map(book => book.volumeInfo)
-  for (let i = 0; i < searchResults.value.length; i++) {
-    title[i] = searchResults.value[i].title
-    if (!searchResults.value[i].authors) {
-      author[i] = 'Unknown Author'
-      console.log("no author found")
-    } else {
-      author[i] = searchResults.value[i].authors[0]
-    }
-    if (!searchResults.value[i].imageLinks) {
-      thumbnail[i] = 'https://via.placeholder.com/150'
-      console.log("no image found")
-    }
-    else {
-      thumbnail[i] = searchResults.value[i].imageLinks.thumbnail
-      console.log(thumbnail[i])
-    }
-  }
+  searchResults.value = searchedBook.items.map(book => ({title: book.volumeInfo.title, authors: book.volumeInfo.authors ? book.volumeInfo.authors[0] : "author not found", thumbnail: book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : "https://via.placeholder.com/150"}))
+  console.log("search results: ", searchResults.value)
 }
 
 onMounted(async () => {
