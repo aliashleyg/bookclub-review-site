@@ -4,13 +4,13 @@ import { getBooks, createBook, deleteBook, updateBook, searchGoogleBooks } from 
 import BookCard from "@/components/BookCard.vue";
 import AddBookForm from "@/components/AddBookForm.vue";
 import BookSearch from "@/components/BookSearch.vue";
+import BookSearchResultsList from "@/components/BookSearchResultsList.vue";
 
 const books = ref([])
 const loading = ref(true)
 const error = ref(null)
 const bookToEdit = ref(null)
 const searchResults = ref([])
-const bookResultAttributes = ref([])
 
 async function handleSaveBook(newBook) {
   if (bookToEdit.value) {
@@ -41,8 +41,8 @@ async function handleEditingBook(book) {
 
 async function handleSearch(searchInputTitle) {
   const searchedBook = await searchGoogleBooks(searchInputTitle)
-  searchResults.value = searchedBook.items.map(book => ({title: book.volumeInfo.title, authors: book.volumeInfo.authors ? book.volumeInfo.authors[0] : "author not found", thumbnail: book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : "https://via.placeholder.com/150"}))
-  console.log("search results: ", searchResults.value)
+  searchResults.value = searchedBook.items.map(book => ({title: book.volumeInfo.title, authors: book.volumeInfo.authors ? book.volumeInfo.authors[0] : "author not found", thumbnail: book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : "https://placehold.co/600x400"}))
+  return searchResults.value
 }
 
 onMounted(async () => {
@@ -61,6 +61,7 @@ onMounted(async () => {
   <p v-if="loading">Loading...</p>
   <p v-else-if="error">{{ error }}</p>
   <BookSearch @search-input-title="handleSearch"/>
+  <BookSearchResultsList :search-results="searchResults"/>
   <AddBookForm @submit-book="handleSaveBook"
     :editing-book="bookToEdit"/>
   <BookCard

@@ -1,4 +1,5 @@
 const API_URL = 'http://127.0.0.1:8000'
+const apiKey = import.meta.env.VITE_GOOGLE_BOOKS_API_KEY;
 
 export async function getBooks() {
     const res = await fetch(`${API_URL}/books`)
@@ -35,6 +36,6 @@ export async function updateBook(id, bookData) {
 }
 
 export async function searchGoogleBooks(searchInputTitle) {
-    const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(searchInputTitle)}`)
+    const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(searchInputTitle)}&key=${apiKey}`)
     return res.json()
 }
