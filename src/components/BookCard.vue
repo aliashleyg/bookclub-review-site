@@ -24,7 +24,7 @@ function editBook(book) {
     <template #header>  <img :src="book.coverImage" alt="Cover of The Hobbit Manuscript" style="width: 100%"></template>
     <template #title>{{ book.title }}</template>
     <template #subtitle>{{ book.author }}</template>
-    <template #content><p>{{ book.genre }}</p>
+    <template #content>
       <p class="m-0">{{ book.description }}</p>
       <button @click="isOpen = true" style="margin-right:15px">Delete</button>
       <button @click="editBook(book)">Edit Book Details</button>

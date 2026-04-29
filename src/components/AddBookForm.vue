@@ -7,19 +7,24 @@ const emit = defineEmits(['submitBook'])
 const newBook = ref({
   title: '',
   author: '',
-  genre: '',
   description: '',
   coverImage: ''
 })
 
 const props = defineProps({
   editingBook: Object,
+  populatingSelectedBook: Object,
 })
 
 watch(() => props.editingBook, (newVal) => {
   if (newVal) {
     newBook.value = { ...newVal }
-    console.log("submitted book: ", newVal)
+  }
+})
+
+watch(() => props.populatingSelectedBook, (newVal) => {
+  if (newVal) {
+    newBook.value = { ...newVal }
   }
 })
 
@@ -32,7 +37,6 @@ function resetForm() {
   newBook.value = {
     title: '',
     author: '',
-    genre: '',
     description: '',
     coverImage: ''
   }
@@ -47,8 +51,6 @@ function resetForm() {
 
     <input v-model="newBook.title" placeholder="Title" required/><br />
     <input v-model="newBook.author" placeholder="Author" /><br />
-    <input v-model="newBook.genre" placeholder="Genre" /><br />
-    <input v-model="newBook.coverImage" placeholder="Cover Image URL" /><br />
     <textarea v-model="newBook.description" placeholder="Description"></textarea><br />
 
     <button type="submit">Submit</button>

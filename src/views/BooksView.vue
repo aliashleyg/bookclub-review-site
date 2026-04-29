@@ -50,7 +50,11 @@ async function handleEditingBook(book) {
 
 async function handleSearch(searchInputTitle) {
   const searchedBook = await searchGoogleBooks(searchInputTitle)
-  searchResults.value = searchedBook.items.map(book => ({title: book.volumeInfo.title, authors: book.volumeInfo.authors ? book.volumeInfo.authors[0] : "author not found", thumbnail: book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : "https://placehold.co/600x400"}))
+  console.log(searchedBook)
+  searchResults.value = searchedBook.items.map(book => ({
+    title: book.volumeInfo.title, author: book.volumeInfo.authors ? book.volumeInfo.authors[0] : "author not found",
+    thumbnail: book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : "https://placehold.co/600x400",
+    description: book.volumeInfo.description ? book.volumeInfo.description : "no description provided"}))
   return searchResults.value
 }
 
@@ -71,7 +75,8 @@ onMounted(async () => {
   <p v-else-if="error">{{ error }}</p>
   <AddBookForm
       @submit-book="handleSaveBook"
-      :editing-book="bookToEdit"/>
+      :editing-book="bookToEdit"
+      :populating-selected-book="selectedBook"/>
   <BookSearch @search-input-title="handleSearch"/>
   <BookSearchResultsList
       @select-book-click="handleSelectedBook"

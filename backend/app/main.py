@@ -49,7 +49,6 @@ def create_book(book: BookCreate):
         "title": book.title,
         "author": book.author,
         "coverImage": book.coverImage,
-        "genre": book.genre,
         "description": book.description
         }
     books.append(new_book)
@@ -70,7 +69,6 @@ def update_book(id: int, updated_book: BookCreate):
             current_book["title"] = updated_book.title
             current_book["author"] = updated_book.author
             current_book["coverImage"] = updated_book.coverImage
-            current_book["genre"] = updated_book.genre
             current_book["description"] = updated_book.description
             return current_book
     return {"message": f"Book with id {id} not found"}

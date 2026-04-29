@@ -23,6 +23,7 @@
 8. **BooksView** runs update mode because `bookToEdit` exists
 9. After successful update, `bookToEdit` is reset to `null`
 
+
 ## Delete Book
 
 1. Delete button lives in **BookCard** and calls `handleDeleteClick`
@@ -33,7 +34,28 @@
 
 
 ## Search Book (Google API)
-## Select Book From Search (populate form)
+
+1. Search input and button live in **BookSearch**
+2. Search input is bound to `searchInputTitle`
+3. Search button triggers `bookSearch`
+4. `bookSearch` emits the query string via `search`
+5. **BooksView** receives the query in `handleSearch`
+6. `handleSearch` calls `searchGoogleBooks(query)` from **api.js**
+7. The API response is mapped into a simplified array and stored in `searchResults`
+
+
+## Select Book From Search List (populate form)
+
+1. Select button lives in BookSearchResultCard
+2. Select button triggers `selectBook(book)`
+3. `selectBook(book)` emits `book` through `selectBookClick`
+4. **BookSearchResultsList** receives book through `selectBookClick`
+5. **BookSearchResultsList** emits `selectBookClick` through `passSelectedBook`
+6. **BooksView** receives book in `handleSelectedBook`
+7. 
+
+
+
 ## Select Book From Search (same as Add Book, just different source)
 ## Clear Search (input + results)
 
