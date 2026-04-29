@@ -13,7 +13,7 @@ const newBook = ref({
 })
 
 const props = defineProps({
-  editingBook: Object
+  editingBook: Object,
 })
 
 watch(() => props.editingBook, (newVal) => {

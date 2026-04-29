@@ -11,6 +11,22 @@ const loading = ref(true)
 const error = ref(null)
 const bookToEdit = ref(null)
 const searchResults = ref([])
+const selectedBook = ref(null)
+
+function handleSelectedBook(book) {
+  selectedBook.value = book
+  console.log("book selected: ", book)
+
+}
+
+function getUpdatedBookList(updatedBook) {
+  books.value = books.value.map(function(book) {
+    if (book.id === bookToEdit.value.id) {
+      return updatedBook
+    }
+    return book
+  })
+}
 
 async function handleSaveBook(newBook) {
   if (bookToEdit.value) {
@@ -22,14 +38,7 @@ async function handleSaveBook(newBook) {
     books.value.push(createdBook)
   }
 }
-function getUpdatedBookList(updatedBook) {
-  books.value = books.value.map(function(book) {
-    if (book.id === bookToEdit.value.id) {
-      return updatedBook
-    }
-    return book
-  })
-}
+
 async function handleDeletingBook(id) {
   const deletedBook = await deleteBook(id)
   books.value = books.value.filter(book => book.id !== id)
@@ -60,10 +69,13 @@ onMounted(async () => {
 <template>
   <p v-if="loading">Loading...</p>
   <p v-else-if="error">{{ error }}</p>
+  <AddBookForm
+      @submit-book="handleSaveBook"
+      :editing-book="bookToEdit"/>
   <BookSearch @search-input-title="handleSearch"/>
-  <BookSearchResultsList :search-results="searchResults"/>
-  <AddBookForm @submit-book="handleSaveBook"
-    :editing-book="bookToEdit"/>
+  <BookSearchResultsList
+      @select-book-click="handleSelectedBook"
+      :search-results="searchResults"/>
   <BookCard
       @edit-book-click="handleEditingBook"
       @delete-book-click="handleDeletingBook"
