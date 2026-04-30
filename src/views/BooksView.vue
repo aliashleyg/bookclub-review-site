@@ -48,8 +48,14 @@ async function handleEditingBook(book) {
   bookToEdit.value = book
 }
 
-async function handleSearch(searchInputTitle) {
-  const searchedBook = await searchGoogleBooks(searchInputTitle)
+async function handleSearch(searchInput) {
+  let query = ''
+  if (searchInput.searchInputTitle && searchInput.searchInputAuthor) {
+    query = `intitle:${searchInput.searchInputTitle} inauthor:${searchInput.searchInputAuthor}`
+  } else {
+    query = `intitle:${searchInput.searchInputTitle}`
+  }
+  const searchedBook = await searchGoogleBooks(query)
   searchResults.value = searchedBook.items.map(book => ({
     title: book.volumeInfo.title, author: book.volumeInfo.authors ? book.volumeInfo.authors[0] : "author not found",
     coverImage: book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : "https://placehold.co/600x400",
@@ -76,7 +82,7 @@ onMounted(async () => {
       @submit-book="handleSaveBook"
       :editing-book="bookToEdit"
       :populating-selected-book="selectedBook"/>
-  <BookSearch @search-input-title="handleSearch"/>
+  <BookSearch @search-input="handleSearch"/>
   <BookSearchResultsList
       @select-book-click="handleSelectedBook"
       :search-results="searchResults"/>
