@@ -15,8 +15,6 @@ const selectedBook = ref(null)
 
 function handleSelectedBook(book) {
   selectedBook.value = book
-  console.log("book selected: ", book)
-
 }
 
 function getUpdatedBookList(updatedBook) {
@@ -36,6 +34,8 @@ async function handleSaveBook(newBook) {
   } else {
     const createdBook = await createBook(newBook)
     books.value.push(createdBook)
+    selectedBook.value = null
+    searchResults.value = null
   }
 }
 
@@ -50,10 +50,9 @@ async function handleEditingBook(book) {
 
 async function handleSearch(searchInputTitle) {
   const searchedBook = await searchGoogleBooks(searchInputTitle)
-  console.log(searchedBook)
   searchResults.value = searchedBook.items.map(book => ({
     title: book.volumeInfo.title, author: book.volumeInfo.authors ? book.volumeInfo.authors[0] : "author not found",
-    thumbnail: book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : "https://placehold.co/600x400",
+    coverImage: book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : "https://placehold.co/600x400",
     description: book.volumeInfo.description ? book.volumeInfo.description : "no description provided"}))
   return searchResults.value
 }
