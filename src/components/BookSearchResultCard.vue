@@ -18,6 +18,7 @@ function selectBook(book) {
     <template #content>
       <img :src="book.coverImage" alt="Cover of book" style="width: 100%; margin: 1rem height: auto;"/><br />
       <p>{{book.description}}</p>
+      <p>{{book.isbn}}</p>
       <button @click="selectBook(book)" type="submit">Select Book</button>
     </template>
   </Card>

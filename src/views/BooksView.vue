@@ -56,12 +56,30 @@ async function handleSearch(searchInput) {
     query = `intitle:${searchInput.searchInputTitle}`
   }
   const searchedBook = await searchGoogleBooks(query)
-  searchResults.value = searchedBook.items.map(book => ({
-    title: book.volumeInfo.title, author: book.volumeInfo.authors ? book.volumeInfo.authors[0] : "author not found",
-    coverImage: book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail + "&fife=w800-h1200" : "https://placehold.co/600x400",
-    description: book.volumeInfo.description ? book.volumeInfo.description : "no description provided"}))
-
+  searchResults.value = searchedBook.items.map(formatBook)
   return searchResults.value
+}
+
+function formatBook(book) {
+  const industryIdentifier = book.volumeInfo.industryIdentifiers
+  let isbn = ''
+  const isbn_13 = book.volumeInfo.industryIdentifiers.find(item => item.type === 'ISBN_13')
+  const isbn_10 = book.volumeInfo.industryIdentifiers.find(item => item.type === 'ISBN_10')
+  if (industryIdentifier && isbn_13) {
+    isbn = isbn_13.identifier
+  } else if (industryIdentifier && isbn_10) {
+    isbn = isbn_10.identifier
+  } else {
+    isbn = "No ISBN available."
+  }
+
+  return {
+    title: book.volumeInfo.title,
+    author: book.volumeInfo.authors ? book.volumeInfo.authors[0] : "author not found",
+    description: book.volumeInfo.description ? book.volumeInfo.description : "no description provided",
+    coverImage: book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail + "&fife=w800-h1200" : "https://placehold.co/600x400",
+    isbn: isbn
+  }
 }
 
 onMounted(async () => {
