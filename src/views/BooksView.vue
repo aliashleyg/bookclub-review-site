@@ -58,8 +58,9 @@ async function handleSearch(searchInput) {
   const searchedBook = await searchGoogleBooks(query)
   searchResults.value = searchedBook.items.map(book => ({
     title: book.volumeInfo.title, author: book.volumeInfo.authors ? book.volumeInfo.authors[0] : "author not found",
-    coverImage: book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : "https://placehold.co/600x400",
+    coverImage: book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail + "&fife=w800-h1200" : "https://placehold.co/600x400",
     description: book.volumeInfo.description ? book.volumeInfo.description : "no description provided"}))
+
   return searchResults.value
 }
 
