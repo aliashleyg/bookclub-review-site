@@ -1,10 +1,12 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { getBooks, createBook, deleteBook, updateBook, searchGoogleBooks } from '@/services/api'
+import Dialog from 'primevue/dialog';
 import BookCard from "@/components/BookCard.vue";
 import AddBookForm from "@/components/AddBookForm.vue";
 import BookSearch from "@/components/BookSearch.vue";
 import BookSearchResultsList from "@/components/BookSearchResultsList.vue";
+import ReviewBookModal from "@/components/ReviewBookModal.vue";
 
 const books = ref([])
 const loading = ref(true)
@@ -12,9 +14,11 @@ const error = ref(null)
 const bookToEdit = ref(null)
 const searchResults = ref([])
 const selectedBook = ref(null)
+const bookReviewModalIsOpen = ref(false)
 
 function handleSelectedBook(book) {
   selectedBook.value = book
+  bookReviewModalIsOpen.value = true
 }
 
 function getUpdatedBookList(updatedBook) {
@@ -62,15 +66,19 @@ async function handleSearch(searchInput) {
 
 function formatBook(book) {
   const industryIdentifier = book.volumeInfo.industryIdentifiers
-  let isbn = ''
-  const isbn_13 = book.volumeInfo.industryIdentifiers.find(item => item.type === 'ISBN_13')
-  const isbn_10 = book.volumeInfo.industryIdentifiers.find(item => item.type === 'ISBN_10')
-  if (industryIdentifier && isbn_13) {
-    isbn = isbn_13.identifier
-  } else if (industryIdentifier && isbn_10) {
-    isbn = isbn_10.identifier
+  let isbn
+  if (industryIdentifier) {
+    const isbn_13 = book.volumeInfo.industryIdentifiers.find(item => item.type === 'ISBN_13')
+    const isbn_10 = book.volumeInfo.industryIdentifiers.find(item => item.type === 'ISBN_10')
+    if (isbn_13) {
+      isbn = isbn_13.identifier
+    } else if (isbn_10) {
+      isbn = isbn_10.identifier
+    } else {
+      isbn = "No ISBN available."
+    }
   } else {
-    isbn = "No ISBN available."
+    isbn = "No ISBN available"
   }
 
   return {
@@ -97,10 +105,6 @@ onMounted(async () => {
 <template>
   <p v-if="loading">Loading...</p>
   <p v-else-if="error">{{ error }}</p>
-  <AddBookForm
-      @submit-book="handleSaveBook"
-      :editing-book="bookToEdit"
-      :populating-selected-book="selectedBook"/>
   <BookSearch @search-input="handleSearch"/>
   <BookSearchResultsList
       @select-book-click="handleSelectedBook"
@@ -110,8 +114,16 @@ onMounted(async () => {
       @delete-book-click="handleDeletingBook"
       v-for="book in books"
       :key="book.id"
-      :book="book"
-  />
+      :book="book"/>
+<!--  Not using this anymore so can delete when ready, but keeping for now-->
+<!--  <AddBookForm-->
+<!--      @submit-book="handleSaveBook"-->
+<!--      :editing-book="bookToEdit"-->
+<!--      :populating-selected-book="selectedBook"/>-->
+
+  <Dialog v-model:visible="bookReviewModalIsOpen">
+    <ReviewBookModal />
+  </Dialog>
 </template>
 
 <style scoped></style>

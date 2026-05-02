@@ -14,7 +14,7 @@ function selectBook(book) {
 <template>
   <Card style="width: 25rem; overflow: hidden">
     <template #header> {{ book.title }}</template>
-    <template #title> {{ book.authors }}</template>
+    <template #title> {{ book.author }}</template>
     <template #content>
       <img :src="book.coverImage" alt="Cover of book" style="width: 100%; margin: 1rem height: auto;"/><br />
       <p>{{book.description}}</p>
