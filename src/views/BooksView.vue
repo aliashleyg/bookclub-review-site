@@ -115,6 +115,7 @@ onMounted(async () => {
       v-for="book in books"
       :key="book.id"
       :book="book"/>
+
 <!--  Not using this anymore so can delete when ready, but keeping for now-->
 <!--  <AddBookForm-->
 <!--      @submit-book="handleSaveBook"-->
@@ -122,7 +123,8 @@ onMounted(async () => {
 <!--      :populating-selected-book="selectedBook"/>-->
 
   <Dialog v-model:visible="bookReviewModalIsOpen">
-    <ReviewBookModal />
+    <ReviewBookModal
+      :populating-selected-book="selectedBook"/>
   </Dialog>
 </template>
 
