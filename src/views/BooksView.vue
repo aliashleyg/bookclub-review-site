@@ -31,16 +31,12 @@ function getUpdatedBookList(updatedBook) {
 }
 
 async function handleSaveBook(newBook) {
-  if (bookToEdit.value) {
-    const updatedBook = await updateBook(bookToEdit.value.id, newBook)
-    getUpdatedBookList(updatedBook)
-    bookToEdit.value = null
-  } else {
-    const createdBook = await createBook(newBook)
-    books.value.push(createdBook)
-    selectedBook.value = null
-    searchResults.value = null
-  }
+  console.log(newBook)
+  const addBookToLibrary = await createBook(newBook)
+  books.value.push(addBookToLibrary)
+  selectedBook.value = null
+  searchResults.value = null
+  bookReviewModalIsOpen.value = false
 }
 
 async function handleDeletingBook(id) {
@@ -122,9 +118,10 @@ onMounted(async () => {
 <!--      :editing-book="bookToEdit"-->
 <!--      :populating-selected-book="selectedBook"/>-->
 
-  <Dialog v-model:visible="bookReviewModalIsOpen">
+  <Dialog v-model:visible="bookReviewModalIsOpen" :style="{ width: '25rem' }">
     <ReviewBookModal
-      :populating-selected-book="selectedBook"/>
+      :populating-selected-book="selectedBook"
+      @submit-book="handleSaveBook"/>
   </Dialog>
 </template>
 
