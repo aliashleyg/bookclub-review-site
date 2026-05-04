@@ -27,7 +27,7 @@ function editBook(book) {
     <template #content>
       <p class="m-0">{{ book.description }}</p>
       <button @click="isOpen = true" style="margin-right:15px">Delete</button>
-      <button @click="editBook(book)">Edit Book Details</button>
+<!--      <button @click="editBook(book)">Edit Book Details</button>-->
     </template>
   </Card>
   <Dialog v-model:visible="isOpen" >
