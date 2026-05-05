@@ -10,12 +10,12 @@ const searchInput = ref({
 
 function bookSearch() {
   emit('search-input', searchInput.value)
+  searchInput.value = '';
 }
 
 </script>
 
 <template>
-  <h2>Search</h2>
   <input v-model="searchInput.searchInputTitle" placeholder="Search by Book Title" />
   <input v-model="searchInput.searchInputAuthor" placeholder="Search by Author" />
   <button @click="bookSearch">Search</button>

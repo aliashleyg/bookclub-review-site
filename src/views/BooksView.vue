@@ -101,10 +101,12 @@ onMounted(async () => {
 <template>
   <p v-if="loading">Loading...</p>
   <p v-else-if="error">{{ error }}</p>
+  <h2>Search</h2>
   <BookSearch @search-input="handleSearch"/>
   <BookSearchResultsList
       @select-book-click="handleSelectedBook"
       :search-results="searchResults"/>
+  <h2>Library</h2>
   <BookCard
       @edit-book-click="handleEditingBook"
       @delete-book-click="handleDeletingBook"
