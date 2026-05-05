@@ -13,22 +13,22 @@ app.add_middleware(
 )
 
 books = [
-    {
-        "id": 1,
-        "title": "THIS CAME FROM FASTAPI",
-        "author": "Backend Test",
-        "genre": "Test Genre",
-        "description": "If you see this, the frontend is loading data from the API.",
-        "coverImage": "https://upload.wikimedia.org/wikipedia/commons/c/c8/HMCoFirstEdSecondPrintTitle.jpg"
-    },
-    {
-        "id": 2,
-        "title": "War and Peace",
-        "author": "Leo Tolstoy",
-        "genre": "History",
-        "description": "A history novel by Leo Tolstoy",
-        "coverImage": "https://upload.wikimedia.org/wikipedia/commons/c/c8/HMCoFirstEdSecondPrintTitle.jpg"
-    }
+    # {
+    #     "id": 1,
+    #     "title": "THIS CAME FROM FASTAPI",
+    #     "author": "Backend Test",
+    #     "genre": "Test Genre",
+    #     "description": "If you see this, the frontend is loading data from the API.",
+    #     "coverImage": "https://upload.wikimedia.org/wikipedia/commons/c/c8/HMCoFirstEdSecondPrintTitle.jpg"
+    # },
+    # {
+    #     "id": 2,
+    #     "title": "War and Peace",
+    #     "author": "Leo Tolstoy",
+    #     "genre": "History",
+    #     "description": "A history novel by Leo Tolstoy",
+    #     "coverImage": "https://upload.wikimedia.org/wikipedia/commons/c/c8/HMCoFirstEdSecondPrintTitle.jpg"
+    # }
 ]
 
 @app.get("/books")
@@ -49,7 +49,8 @@ def create_book(book: BookCreate):
         "title": book.title,
         "author": book.author,
         "coverImage": book.coverImage,
-        "description": book.description
+        "description": book.description,
+        "monthRead": book.monthRead
         }
     books.append(new_book)
     return new_book
@@ -70,5 +71,6 @@ def update_book(id: int, updated_book: BookCreate):
             current_book["author"] = updated_book.author
             current_book["coverImage"] = updated_book.coverImage
             current_book["description"] = updated_book.description
+            current_book["monthRead"] = updated_book.monthRead
             return current_book
     return {"message": f"Book with id {id} not found"}

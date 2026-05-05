@@ -31,8 +31,8 @@ function getUpdatedBookList(updatedBook) {
 }
 
 async function handleSaveBook(newBook) {
-  console.log(newBook)
   const addBookToLibrary = await createBook(newBook)
+  console.log(addBookToLibrary)
   books.value.push(addBookToLibrary)
   selectedBook.value = null
   searchResults.value = null
