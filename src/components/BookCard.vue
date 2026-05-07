@@ -2,6 +2,7 @@
 import Card from 'primevue/card'
 import Dialog from 'primevue/dialog';
 import {ref} from "vue";
+import BookDescription from "@/components/BookDescription.vue";
 const emit = defineEmits(['deleteBookClick', 'editBookClick'])
 const isOpen = ref(false)
 
@@ -21,15 +22,14 @@ function editBook(book) {
 
 <template>
   <Card style="width: 25rem; overflow: hidden">
-    <template #header>  <img :src="book.coverImage" alt="Cover of The Hobbit Manuscript" style="width: 100%"></template>
+    <template #header>  <img :src="book.coverImage" :alt="'Cover of ' + book.title" style="width: 100%"></template>
 
     <template #title>{{ book.title }} - {{ book.monthRead }}</template>
     <template #subtitle>{{ book.author }}</template>
     <template #content>
-
-      <p class="m-0">{{ book.description }}</p>
+      <BookDescription :description="book.description" />
       <button @click="isOpen = true" style="margin-right:15px">Delete</button>
-<!--      <button @click="editBook(book)">Edit Book Details</button>-->
+      <button @click="editBook(book)">Edit Book Details</button>
     </template>
   </Card>
   <Dialog v-model:visible="isOpen" >
