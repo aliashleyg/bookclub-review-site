@@ -10,7 +10,10 @@ const searchInput = ref({
 
 function bookSearch() {
   emit('search-input', searchInput.value)
-  searchInput.value = '';
+  searchInput.value = {
+    searchInputTitle: '',
+    searchInputAuthor: ''
+  };
 }
 
 </script>
