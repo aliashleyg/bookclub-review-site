@@ -6,7 +6,7 @@ defineProps({
 
 const isDescriptionExpanded = ref(false)
 
-function expandDescription(description) {
+function expandDescription() {
   isDescriptionExpanded.value = !isDescriptionExpanded.value
   console.log(isDescriptionExpanded.value)
 }
@@ -38,6 +38,7 @@ function expandDescription(description) {
 .pseudoLinkStyle:hover {
   color: gray;
   text-decoration: underline;
+  cursor: pointer;
 }
 
 </style>
