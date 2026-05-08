@@ -8,7 +8,8 @@ const newBook = ref({
   title: '',
   author: '',
   description: '',
-  coverImage: ''
+  coverImage: '',
+  isbn: ''
 })
 
 const props = defineProps({
@@ -38,7 +39,8 @@ function resetForm() {
     title: '',
     author: '',
     description: '',
-    coverImage: ''
+    coverImage: '',
+    isbn: ''
   }
 
 }
@@ -52,6 +54,7 @@ function resetForm() {
     <input v-model="newBook.title" placeholder="Title" required/><br />
     <input v-model="newBook.author" placeholder="Author" /><br />
     <textarea v-model="newBook.description" placeholder="Description"></textarea><br />
+
 
     <button type="submit">Submit</button>
   </form>

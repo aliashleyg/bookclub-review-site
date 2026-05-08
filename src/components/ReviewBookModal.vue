@@ -19,7 +19,6 @@ function submitBook(book) {
   emit('submitBook', updatedBook)
 }
 
-
 </script>
 
 <template>

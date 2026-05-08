@@ -33,6 +33,7 @@ function getUpdatedBookList(updatedBook) {
 async function handleSaveBook(newBook) {
   const addBookToLibrary = await createBook(newBook)
   books.value.push(addBookToLibrary)
+  console.log(books)
   selectedBook.value = null
   searchResults.value = null
   bookReviewModalIsOpen.value = false

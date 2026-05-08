@@ -50,7 +50,8 @@ def create_book(book: BookCreate):
         "author": book.author,
         "coverImage": book.coverImage,
         "description": book.description,
-        "monthRead": book.monthRead
+        "monthRead": book.monthRead,
+        "isbn": book.isbn
         }
     books.append(new_book)
     return new_book
