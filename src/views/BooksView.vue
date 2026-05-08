@@ -31,9 +31,18 @@ function getUpdatedBookList(updatedBook) {
 }
 
 async function handleSaveBook(newBook) {
+  if (books.value.some(book => book.isbn === newBook.isbn)) {
+    alert("This book is already in your library")
+    resetUI()
+    return
+  }
+
   const addBookToLibrary = await createBook(newBook)
   books.value.push(addBookToLibrary)
-  console.log(books)
+  resetUI()
+}
+
+function resetUI() {
   selectedBook.value = null
   searchResults.value = null
   bookReviewModalIsOpen.value = false
