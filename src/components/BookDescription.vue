@@ -14,14 +14,19 @@ function expandDescription(description) {
 </script>
 
 <template>
-  <p v-if="isDescriptionExpanded">
+  <div v-if="description.length > 175">
+    <p v-if="isDescriptionExpanded">
+      {{description}}
+      <span class="pseudoLinkStyle" @click="expandDescription()">CLOSE</span>
+    </p>
+    <p v-else>
+      {{description.slice(0,175)}}...
+      <span class="pseudoLinkStyle" @click="expandDescription()">MORE</span>
+    </p>
+  </div>
+  <div v-else>
     {{description}}
-    <span class="pseudoLinkStyle" @click="expandDescription()">CLOSE</span>
-  </p>
-  <p v-else>
-    {{description.slice(0,175)}}...
-    <span class="pseudoLinkStyle" @click="expandDescription()">MORE</span>
-  </p>
+  </div>
 </template>
 
 <style scoped>
