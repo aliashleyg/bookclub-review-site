@@ -6,7 +6,7 @@ import BookDescription from "@/components/BookDescription.vue";
 const emit = defineEmits(['deleteBookClick', 'editBookClick'])
 const isOpen = ref(false)
 
-defineProps({
+const props = defineProps({
   book: Object
 })
 
@@ -18,14 +18,34 @@ function editBook(book) {
   emit('editBookClick', book)
 }
 
+function getMonth(book) {
+  const dateSplit = props.book.monthRead.split("-")
+  const month = parseInt(dateSplit[1])
+  const year = parseInt(dateSplit[0])
+  const newDate = new Date(year, month, 0)
+  return newDate.toLocaleString('en-US', { month: 'long' });
+}
+
+function getYear(book) {
+  const dateSplit = props.book.monthRead.split("-")
+  const month = parseInt(dateSplit[1])
+  const year = parseInt(dateSplit[0])
+  const newDate = new Date(year, month, 0)
+  return newDate.getFullYear()
+}
 </script>
 
 <template>
   <Card style="width: 25rem; overflow: hidden">
-    <template #header>  <img :src="book.coverImage" :alt="'Cover of ' + book.title" style="width: 100%"></template>
+    <template #header>
+      <h2 style="text-align: right">{{ getMonth(book) }} {{ getYear(book)}}</h2>
+      <h2>{{ book.title }}</h2>
+      <h3>{{ book.author }}</h3>
+      <img :src="book.coverImage" :alt="'Cover of ' + book.title" style="width: 100%">
+    </template>
 
-    <template #title>{{ book.title }} - {{ book.monthRead }}</template>
-    <template #subtitle>{{ book.author }}</template>
+<!--    <template #title>{{ book.author }}</template>-->
+<!--    <template #subtitle>{{ book.author }}</template>-->
     <template #content>
       <BookDescription :description="book.description" />
       <button @click="isOpen = true" style="margin-right:15px">Delete</button>
