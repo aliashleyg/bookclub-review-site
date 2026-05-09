@@ -8,10 +8,10 @@ const props = defineProps({
   populatingSelectedBook: Object,
 })
 
-const monthRead = ref(null)
+const monthRead = ref(new Date())
+monthRead.value = null
 
 function submitBook(book) {
-  console.log()
   const formattedDate = monthRead.value.toISOString().slice(0, 7)
   book["monthRead"] = formattedDate;
   const updatedBook = {
@@ -27,8 +27,8 @@ function submitBook(book) {
   <h2>Add Book To Library</h2>
   <h3>Book Read:</h3>
   <FloatLabel variant="on">
-    <DatePicker v-model="monthRead" view="month" dateFormat="mm/yy" showClear inputId="on_label"/>
-    <label for="on_label">Select Month/Year Read</label><br>
+    <DatePicker v-model="monthRead" view="month" dateFormat="MM - yy" showClear inputId="on_label" showIcon/>
+    <label for="on_label">Select Month Read</label><br>
   </FloatLabel>
     <img :src="populatingSelectedBook.coverImage" alt="Cover of book" style="margin: 1rem; height: 150px"/><br />
     <h3> {{populatingSelectedBook.title}}</h3>
