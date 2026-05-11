@@ -30,15 +30,17 @@ function getUpdatedBookList(updatedBook) {
   })
 }
 
-async function handleSaveBook(newBook) {
-  if (books.value.some(book => book.isbn === newBook.isbn)) {
-    alert("This book is already in your library")
-    resetUI()
-    return
+async function handleSaveBook(payload) {
+  console.log('books:', books.value)
+  if (payload.mode === "add") {
+    if (books.value.some(book => book.isbn === payload.bookPassed.isbn)) {
+      alert("This book is already in your library")
+      resetUI()
+      return
+    }
+    const addBookToLibrary = await createBook(payload.bookPassed)
+    books.value.push(addBookToLibrary)
   }
-
-  const addBookToLibrary = await createBook(newBook)
-  books.value.push(addBookToLibrary)
   resetUI()
 }
 
@@ -55,6 +57,7 @@ async function handleDeletingBook(id) {
 
 async function handleEditingBook(book) {
   bookToEdit.value = book
+  bookReviewModalIsOpen.value = true
 }
 
 async function handleSearch(searchInput) {
@@ -132,6 +135,7 @@ onMounted(async () => {
   <Dialog v-model:visible="bookReviewModalIsOpen" :style="{ width: '25rem' }">
     <ReviewBookModal
       :populating-selected-book="selectedBook"
+      :editing-book="bookToEdit"
       @submit-book="handleSaveBook"/>
   </Dialog>
 </template>
