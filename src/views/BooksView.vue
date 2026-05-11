@@ -31,7 +31,6 @@ function getUpdatedBookList(updatedBook) {
 }
 
 async function handleSaveBook(payload) {
-  console.log('books:', books.value)
   if (payload.mode === "add") {
     if (books.value.some(book => book.isbn === payload.bookPassed.isbn)) {
       alert("This book is already in your library")
@@ -40,6 +39,8 @@ async function handleSaveBook(payload) {
     }
     const addBookToLibrary = await createBook(payload.bookPassed)
     books.value.push(addBookToLibrary)
+  } else {
+    alert("Book updated!")
   }
   resetUI()
 }
