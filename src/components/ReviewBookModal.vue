@@ -41,8 +41,10 @@ function submitBook(book) {
     <DatePicker v-else v-model="monthRead" view="month" dateFormat="MM - yy" showClear inputId="on_label" showIcon/>
     <label for="on_label">Select Month Read</label>
   </FloatLabel>
-    <button v-if="populatingSelectedBook" @click="submitBook(populatingSelectedBook)" type="submit">Add Book</button>
-    <button v-else @click="submitBook(currentBook)" type="submit">Update Book</button>
+    <div v-if='monthRead'>
+      <button v-if="populatingSelectedBook" @click="submitBook(populatingSelectedBook)" type="submit">Add Book</button>
+      <button v-else @click="submitBook(currentBook)" type="submit">Update Book</button>
+    </div>
   <br>
     <img :src="currentBook.coverImage" alt="Cover of book" style="margin: 1rem; height: 150px"/>
     <h3> {{currentBook.title}} </h3>

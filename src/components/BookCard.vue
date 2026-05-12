@@ -3,6 +3,7 @@ import Card from 'primevue/card'
 import Dialog from 'primevue/dialog';
 import {ref} from "vue";
 import BookDescription from "@/components/BookDescription.vue";
+
 const emit = defineEmits(['deleteBookClick', 'editBookClick'])
 const isOpen = ref(false)
 
@@ -41,7 +42,7 @@ function getYear(book) {
       <h2 style="text-align: right">{{ getMonth(book) }} {{ getYear(book)}}</h2>
       <h2>{{ book.title }}</h2>
       <h3>{{ book.author }}</h3>
-      <img :src="book.coverImage" :alt="'Cover of ' + book.title" style="width: 100%">
+      <img :src="book.coverImage" :alt="'Cover of ' + book.title" style="width: 150px">
     </template>
 
 <!--    <template #title>{{ book.author }}</template>-->

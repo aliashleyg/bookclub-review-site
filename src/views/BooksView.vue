@@ -15,6 +15,7 @@ const bookToEdit = ref(null)
 const searchResults = ref([])
 const selectedBook = ref(null)
 const bookReviewModalIsOpen = ref(false)
+const bookRatingModalIsOpen = ref(false)
 
 function handleSelectedBook(book) {
   selectedBook.value = book
@@ -60,6 +61,12 @@ async function handleEditingBook(book) {
   bookToEdit.value = book
   bookReviewModalIsOpen.value = true
 }
+
+async function handleRatingBook(book) {
+  bookToEdit.value = book
+  bookRatingModalIsOpen.value = true
+}
+
 
 async function handleSearch(searchInput) {
   let query = ''
@@ -140,5 +147,6 @@ onMounted(async () => {
       @submit-book="handleSaveBook"/>
   </Dialog>
 </template>
+
 
 <style scoped></style>
