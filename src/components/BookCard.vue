@@ -3,9 +3,11 @@ import Card from 'primevue/card'
 import Dialog from 'primevue/dialog';
 import {ref} from "vue";
 import BookDescription from "@/components/BookDescription.vue";
+import ReaderRatingModal from "@/components/ReaderRatingModal.vue";
 
 const emit = defineEmits(['deleteBookClick', 'editBookClick'])
-const isOpen = ref(false)
+const bookDetailsIsOpen = ref(false)
+const ReaderRatingModalIsOpen = ref(false)
 
 const props = defineProps({
   book: Object
@@ -48,17 +50,21 @@ function getYear(book) {
 <!--    <template #title>{{ book.author }}</template>-->
 <!--    <template #subtitle>{{ book.author }}</template>-->
     <template #content>
-      <BookDescription :description="book.description" />
-      <button @click="isOpen = true" style="margin-right:15px">Delete</button>
-      <button @click="editBook(book)">Edit Book Details</button>
+      <BookDescription :description="book.description" /><br><br>
+      <button @click="editBook(book)">Edit Book Details</button><br><br>
+      <button @click="ReaderRatingModalIsOpen = true">Rate Book</button><br><br>
+      <button @click="bookDetailsIsOpen = true" style="margin-right:15px">Delete</button><br><br>
+
     </template>
   </Card>
-  <Dialog v-model:visible="isOpen" >
+  <Dialog v-model:visible="bookDetailsIsOpen" >
     <h2>Are you sure you want to delete this book?</h2>
     <button @click="deleteBook(book)">Yes</button>
-    <button @click="isOpen = false">No</button>
+    <button @click="bookDetailsIsOpen = false">No</button>
   </Dialog>
-
+  <Dialog v-model:visible="ReaderRatingModalIsOpen">
+    <ReaderRatingModal />
+  </Dialog>
 </template>
 
 <style scoped></style>

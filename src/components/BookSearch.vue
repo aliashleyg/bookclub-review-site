@@ -21,7 +21,7 @@ function bookSearch() {
 <template>
   <input v-model="searchInput.searchInputTitle" placeholder="Search by Book Title" />
   <input v-model="searchInput.searchInputAuthor" placeholder="Search by Author" />
-  <button @click="bookSearch">Search</button>
+  <button @click="bookSearch">Search</button><br><br>
 </template>
 
 <style scoped>

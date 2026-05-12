@@ -34,7 +34,8 @@ function submitBook(book) {
 </script>
 
 <template>
-  <h2>Add Book To Library</h2>
+  <h2 v-if="populatingSelectedBook">Add Book To Library</h2>
+  <h2 v-else>Update Book</h2>
   <h3>Book Read:</h3>
   <FloatLabel variant="on">
     <DatePicker v-if="editingBook" v-model="monthRead" view="month" dateFormat="MM - yy" showClear inputId="on_label" showIcon />
