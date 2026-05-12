@@ -13,6 +13,7 @@ const books = ref([])
 const loading = ref(true)
 const error = ref(null)
 const bookToEdit = ref(null)
+const bookToRate = ref(null)
 const searchResults = ref([])
 const selectedBook = ref(null)
 const bookReviewModalIsOpen = ref(false)
@@ -24,6 +25,7 @@ function handleSelectedBook(book) {
 }
 
 function handleRatingSelectedBook(book) {
+  bookToRate.value = book
   bookRatingModalIsOpen.value = true
 }
 
@@ -66,12 +68,6 @@ async function handleEditingBook(book) {
   bookToEdit.value = book
   bookReviewModalIsOpen.value = true
 }
-
-async function handleRatingBook(book) {
-  bookToEdit.value = book
-  bookRatingModalIsOpen.value = true
-}
-
 
 async function handleSearch(searchInput) {
   let query = ''
@@ -135,7 +131,7 @@ onMounted(async () => {
   <BookCard
       @edit-book-click="handleEditingBook"
       @delete-book-click="handleDeletingBook"
-      @rateBookClick="handleRatingBook"
+      @rate-book-click="handleRatingSelectedBook"
       v-for="book in books"
       :key="book.id"
       :book="book"/>
@@ -154,7 +150,8 @@ onMounted(async () => {
   </Dialog>
 
   <Dialog v-model:visible="bookRatingModalIsOpen">
-    <ReaderRatingModal />
+    <ReaderRatingModal
+      :book-to-rate="handleRatingSelectedBook"/>
   </Dialog>
 </template>
 

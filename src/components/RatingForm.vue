@@ -1,9 +1,14 @@
 <script setup>
+import Rating from 'primevue/rating';
 
+const props = defineProps({
+  bookToRate: Object
+})
 </script>
 
 <template>
-  <h1>Greetings from Rating Form</h1>
+  <h1>Rate</h1>
+  <Rating />
 </template>
 
 <style scoped></style>
