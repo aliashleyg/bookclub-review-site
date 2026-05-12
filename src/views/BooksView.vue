@@ -7,6 +7,7 @@ import AddBookForm from "@/components/AddBookForm.vue";
 import BookSearch from "@/components/BookSearch.vue";
 import BookSearchResultsList from "@/components/BookSearchResultsList.vue";
 import ReviewBookModal from "@/components/ReviewBookModal.vue";
+import ReaderRatingModal from "@/components/ReaderRatingModal.vue";
 
 const books = ref([])
 const loading = ref(true)
@@ -20,6 +21,10 @@ const bookRatingModalIsOpen = ref(false)
 function handleSelectedBook(book) {
   selectedBook.value = book
   bookReviewModalIsOpen.value = true
+}
+
+function handleRatingSelectedBook(book) {
+  bookRatingModalIsOpen.value = true
 }
 
 function getUpdatedBookList(updatedBook) {
@@ -130,6 +135,7 @@ onMounted(async () => {
   <BookCard
       @edit-book-click="handleEditingBook"
       @delete-book-click="handleDeletingBook"
+      @rateBookClick="handleRatingBook"
       v-for="book in books"
       :key="book.id"
       :book="book"/>
@@ -145,6 +151,10 @@ onMounted(async () => {
       :populating-selected-book="selectedBook"
       :editing-book="bookToEdit"
       @submit-book="handleSaveBook"/>
+  </Dialog>
+
+  <Dialog v-model:visible="bookRatingModalIsOpen">
+    <ReaderRatingModal />
   </Dialog>
 </template>
 

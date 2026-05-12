@@ -1,9 +1,11 @@
 <script setup>
-
+import RatingForm from "@/components/RatingForm.vue";
 </script>
 
 <template>
-<h1>Greetings from Reader Rating Modal!</h1>
+
+  <RatingForm />
+
 </template>
 
 <style scoped></style>

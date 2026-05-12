@@ -5,7 +5,7 @@ import {ref} from "vue";
 import BookDescription from "@/components/BookDescription.vue";
 import ReaderRatingModal from "@/components/ReaderRatingModal.vue";
 
-const emit = defineEmits(['deleteBookClick', 'editBookClick'])
+const emit = defineEmits(['deleteBookClick', 'editBookClick', 'rateBookClick'])
 const bookDetailsIsOpen = ref(false)
 const ReaderRatingModalIsOpen = ref(false)
 
@@ -19,6 +19,10 @@ function deleteBook(book) {
 
 function editBook(book) {
   emit('editBookClick', book)
+}
+
+function rateBook(book) {
+  emit('rateBookClick', book)
 }
 
 function getMonth(book) {
@@ -41,7 +45,10 @@ function getYear(book) {
 <template>
   <Card style="width: 25rem; overflow: hidden">
     <template #header>
-      <h2 style="text-align: right">{{ getMonth(book) }} {{ getYear(book)}}</h2>
+      <div style="text-align: right">
+        <h2>{{ getMonth(book) }} {{ getYear(book)}}</h2>
+        <button @click="rateBook(book)">Rate Book</button><br><br>
+      </div>
       <h2>{{ book.title }}</h2>
       <h3>{{ book.author }}</h3>
       <img :src="book.coverImage" :alt="'Cover of ' + book.title" style="width: 150px">
@@ -52,7 +59,6 @@ function getYear(book) {
     <template #content>
       <BookDescription :description="book.description" /><br><br>
       <button @click="editBook(book)">Edit Book Details</button><br><br>
-      <button @click="ReaderRatingModalIsOpen = true">Rate Book</button><br><br>
       <button @click="bookDetailsIsOpen = true" style="margin-right:15px">Delete</button><br><br>
 
     </template>
@@ -62,9 +68,7 @@ function getYear(book) {
     <button @click="deleteBook(book)">Yes</button>
     <button @click="bookDetailsIsOpen = false">No</button>
   </Dialog>
-  <Dialog v-model:visible="ReaderRatingModalIsOpen">
-    <ReaderRatingModal />
-  </Dialog>
+
 </template>
 
 <style scoped></style>
