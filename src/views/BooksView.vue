@@ -151,7 +151,7 @@ onMounted(async () => {
 
   <Dialog v-model:visible="bookRatingModalIsOpen">
     <ReaderRatingModal
-      :book-to-rate="handleRatingSelectedBook"/>
+      :book-to-rate="bookToRate"/>
   </Dialog>
 </template>
 
